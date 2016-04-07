@@ -1,4 +1,11 @@
+var models = require('../models');
 exports.view = function(req, res) {
-    var data = {data: []};
-    res.render("index", data);
+    models.Message
+        .find()
+        .sort('-date')
+        .exec(displayPosts);
+    function displayPosts(err, msg_posts){
+        var data = {data: msg_posts};
+        res.render("index", data);
+    }
 }
